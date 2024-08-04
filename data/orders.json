@@ -1,0 +1,30 @@
+{
+  "orders": [
+    {
+      "id": "197b680c-f6bb-4b26-9368-0bd668c09610",
+      "code": "000001",
+      "created_at": "2024-08-04T17:18:39.832894",
+      "updated_at": "2024-08-04T17:18:39.832894",
+      "status": "NOT_PAID",
+      "payment": {
+        "total": 36.0,
+        "subtotal": 30.50847457627119,
+        "taxes": 5.49152542372881,
+        "discounts": 0.0
+      },
+      "items": [],
+      "rounds": [
+        {
+          "id": "2ee8af0e-225b-4475-a3dc-33b6297f70bc",
+          "items": [
+            {
+              "product_id": "c5ebf5b6-97f9-4b62-821d-4be52286388b",
+              "price_per_unit": 12.0,
+              "quantity": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "updated_at": "2024-08-03T17:50:42.553333",
+  "beers": [
+    {
+      "id": "c5ebf5b6-97f9-4b62-821d-4be52286388b",
+      "product_name": "Pilsen Trujillo",
+      "price_per_unit": 12.0,
+      "quantity": 10
+    },
+    {
+      "id": "fd513460-a855-4100-ac0f-414dd248ce2e",
+      "product_name": "Pilsen Callao",
+      "price_per_unit": 12.0,
+      "quantity": 12
+    },
+    {
+      "id": "a2b336f6-899b-40d6-8386-338bffe9887e",
+      "product_name": "Cusqueña",
+      "price_per_unit": 11.0,
+      "quantity": 5
+    }
+  ]
+}
