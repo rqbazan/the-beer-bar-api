@@ -9,7 +9,7 @@ from use_cases.pay_order.interactor import PayOrderUseCase
 from use_cases.create_order.schema import CreateOrderRequest
 from use_cases.update_order.schema import UpdateOrderRequest
 from use_cases.pay_order.schema import PayOrderRequest
-from use_cases.pay_order.errors import OrderAlreadyPaidError
+from use_cases.pay_order.errors import AlreadyPaidOrderError
 from domain.ports.orders_repository.errors import OrderNotFoundError
 from app.helpers.errors import format_error_response
 from app.dependencies import get_all_orders_use_case, get_create_order_use_case, get_update_order_use_case, get_order_by_id_use_case, get_pay_order_use_case
@@ -41,8 +41,8 @@ def add_errors_handlers(app: FastAPI):
   async def handle_order_not_found(_: Request, error: OrderNotFoundError):
     return format_error_response(error, status.HTTP_404_NOT_FOUND)
   
-  @app.exception_handler(OrderAlreadyPaidError)
-  async def handle_order_not_found(_: Request, error: OrderAlreadyPaidError):
+  @app.exception_handler(AlreadyPaidOrderError)
+  async def handle_order_not_found(_: Request, error: AlreadyPaidOrderError):
     return format_error_response(error, status.HTTP_400_BAD_REQUEST)
   
   return app

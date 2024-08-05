@@ -6,7 +6,7 @@ from domain.ports.payment_service import PaymentService
 from domain.objects import OrderStatus
 from .schema import PayOrderRequest
 from .mapper import order_to_rounds_model
-from .errors import OrderAlreadyPaidError
+from .errors import AlreadyPaidOrderError
 
 class PayOrderUseCase:
     def __init__(self, orders_repository: OrdersRepository, payment_service: PaymentService):
@@ -20,11 +20,11 @@ class PayOrderUseCase:
         raise OrderNotFoundError(order_id)
       
       if order.status == OrderStatus.PAID:
-        raise OrderAlreadyPaidError(order_id)
+        raise AlreadyPaidOrderError(order_id)
       
       rounds_model = order_to_rounds_model(order)
       payment = self.payment_service.calculate_payment(rounds_model, request.discount)
-      order_items = self.payment_service.calculate_order_items(order)
+      order_items = self.payment_service.calculate_order_items(rounds_model)
 
       model = UpdateOrderModel(
         order_id=order.id,

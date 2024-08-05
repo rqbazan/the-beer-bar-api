@@ -1,11 +1,11 @@
 from typing import Optional
 from uuid import UUID
-from domain.entities import Payment, Order, OrderItem
+from domain.entities import Payment, Round, OrderItem
 from domain.ports.orders_repository.schema import UpsertRoundModel
 from domain.ports.payment_service import PaymentService
 
 class SimplePaymentService(PaymentService):
-  __TAXES = 0.18
+  __TAXES_PERCENT = 0.18
 
   def __make_order_item(self, product_id: UUID, data: dict) -> OrderItem:
     return OrderItem(
@@ -14,12 +14,12 @@ class SimplePaymentService(PaymentService):
       total=data.get('price_per_unit') * data.get('quantity')
     )
 
-  def calculate_payment(self, model: list[UpsertRoundModel], discount: Optional[float] = 0) -> Payment:
+  def calculate_payment(self, rounds: list[UpsertRoundModel], discount: Optional[float] = 0) -> Payment:
     total, subtotal = 0, 0
 
-    for round in model:
+    for round in rounds:
       for item in round.items:
-        price_without_taxes = item.price_per_unit / (1 + SimplePaymentService.__TAXES)
+        price_without_taxes = item.price_per_unit / (1 + SimplePaymentService.__TAXES_PERCENT)
         subtotal += price_without_taxes * item.quantity
         total += item.price_per_unit * item.quantity
 
@@ -33,10 +33,10 @@ class SimplePaymentService(PaymentService):
       discounts=discount
     )
   
-  def calculate_order_items(self, order: Order) -> list[OrderItem]:
+  def calculate_order_items(self, rounds: list[UpsertRoundModel]) -> list[OrderItem]:
     store: dict[UUID, dict] = {}
 
-    for round in order.rounds:
+    for round in rounds:
       for item in round.items:
         store[item.product_id] = {
           'price_per_unit': item.price_per_unit,
