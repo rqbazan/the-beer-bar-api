@@ -16,7 +16,7 @@ The system will be based on the Clean Architecture. The system will be divided i
 
 - **Use Cases**: This layer will contain the business rules of the system. For instance, `create_order`, `get_order`, `update_order`, etc.
 
-- **Adapters**: This layer will contain the implementation of the interfaces defined in the domain ports, as well as the REST API application which is a entry point of the system.
+- **Adapters**: This layer will contain the implementation of the interfaces defined in the domain ports, as well as the REST app which is a entry point of the system.
 
 ## Consequences
 
