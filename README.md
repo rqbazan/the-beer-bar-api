@@ -42,7 +42,7 @@
 1. Enter to the virtual env (if you are not in it):
 
    ```bash
-   poetry install
+   poetry shell
    ```
 
 2. Run tests:
