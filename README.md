@@ -1,6 +1,6 @@
 # The Beer Bar API
 
-This is a simple REST API that allows to manage orders in a beer bar.
+🍺 A simple REST API that allows to manage orders in a beer bar
 
 ## Requirements
 
