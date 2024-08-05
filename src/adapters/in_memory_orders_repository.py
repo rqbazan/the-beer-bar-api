@@ -51,9 +51,19 @@ class InMemoryOrdersRepository(OrdersRepository):
 
     if order_to_update is None:
       raise OrderNotFoundError(model.id)
-  
+
+    if model.payment:
+      order_to_update.payment = model.payment
+
+    if model.rounds:
+      order_to_update.rounds = list(map(make_round, model.rounds))
+
+    if model.items:
+      order_to_update.items = model.items
+
+    if model.status:
+      order_to_update.status = model.status
+
     order_to_update.updated_at = datetime.now()
-    order_to_update.payment = model.payment
-    order_to_update.rounds = list(map(make_round, model.rounds))
 
     return order_to_update

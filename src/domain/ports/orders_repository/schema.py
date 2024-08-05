@@ -1,6 +1,7 @@
 from uuid import UUID
+from typing import Optional
 from dataclasses import dataclass
-from domain.entities import RoundItem, Payment
+from domain.entities import RoundItem, Payment, OrderItem, OrderStatus
 
 @dataclass
 class UpsertRoundModel:
@@ -14,5 +15,7 @@ class CreateOrderModel:
 @dataclass
 class UpdateOrderModel:
   order_id: UUID
-  payment: Payment
-  rounds: list[UpsertRoundModel]
+  status: Optional[OrderStatus] = None
+  payment: Optional[Payment] = None
+  rounds: Optional[list[UpsertRoundModel]] = None
+  items: Optional[list[OrderItem]] = None

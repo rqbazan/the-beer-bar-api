@@ -11,6 +11,7 @@ from use_cases.get_orders.interactor import GetAllOrdersUseCase
 from use_cases.create_order.interactor import CreateOrderUseCase
 from use_cases.update_order.interactor import UpdateOrderUseCase
 from use_cases.get_order.interactor import GetOrderByIdUseCase
+from use_cases.pay_order.interactor import PayOrderUseCase
 from adapters.in_memory_inventory_repository import InMemoryInventoryRepository
 from adapters.in_memory_orders_repository import InMemoryOrdersRepository
 from adapters.simple_payment_service import SimplePaymentService
@@ -109,3 +110,8 @@ def get_update_order_use_case(
         payment_service: Annotated[PaymentService, Depends(get_payment_service)],
         order_presenter: Annotated[OrderPresenter, Depends(get_order_presenter)]) -> UpdateOrderUseCase:
     return UpdateOrderUseCase(orders_repository, payment_service, order_presenter)
+
+def get_pay_order_use_case(
+        orders_repository: Annotated[OrdersRepository, Depends(get_orders_repository)],
+        payment_service: Annotated[PaymentService, Depends(get_payment_service)]) -> PayOrderUseCase:
+    return PayOrderUseCase(orders_repository, payment_service)
