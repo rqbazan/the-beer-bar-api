@@ -50,3 +50,13 @@
    ```bash
    make test
    ```
+
+## Deployment
+
+This project is deployed on [fly.io](http://fly.io).
+
+```
+fly deploy
+```
+
+> **Note:** You need to have the [fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) installed and be logged in.
