@@ -2,6 +2,10 @@
 
 🍺 A simple REST API that allows to manage orders in a beer bar
 
+## Decisions
+
+I make some early design decisions, which are specified in the [docs/decisions](./docs/decisions) folder.
+
 ## Requirements
 
 - Python >=3.12
