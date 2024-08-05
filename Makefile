@@ -5,3 +5,6 @@ dev:
 		--port $(PORT) \
 		--app-dir ./src \
 		--reload
+
+test:
+	pytest

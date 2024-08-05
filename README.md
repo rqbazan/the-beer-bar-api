@@ -25,8 +25,28 @@ This is a simple REST API that allows to manage orders in a beer bar.
    poetry install
    ```
 
-2. Run for development:
+2. Enter to the virtual env:
+
+   ```bash
+   poetry shell
+   ```
+
+3. Run for development:
 
    ```bash
    make dev
+   ```
+
+## Run tests
+
+1. Enter to the virtual env (if you are not in it):
+
+   ```bash
+   poetry install
+   ```
+
+2. Run tests:
+
+   ```bash
+   make test
    ```
