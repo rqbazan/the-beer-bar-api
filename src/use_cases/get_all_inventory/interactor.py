@@ -1,6 +1,7 @@
 from domain.ports.inventory_repository import InventoryRepository
 from .schema import GetAllInventoryResponse
 
+
 class GetAllInventoryUseCase:
     def __init__(self, inventory_repository: InventoryRepository):
         self.inventory_repository = inventory_repository

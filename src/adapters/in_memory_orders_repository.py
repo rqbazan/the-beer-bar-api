@@ -3,67 +3,70 @@ from typing import Optional, Any
 from datetime import datetime
 from domain.ports.orders_repository import OrdersRepository
 from domain.ports.orders_repository.schema import CreateOrderModel, UpdateOrderModel
-from domain.ports.orders_repository.errors import OrderNotFoundError
+from domain.ports.orders_repository.errors import NotFoundOrderError
 from domain.entities import Order, Round
 from domain.objects import OrderStatus
 
 make_round = lambda r: Round(id=uuid4(), items=r.items)
 
+
 class InMemoryOrdersRepository(OrdersRepository):
-  orders: list[Order]
+    orders: list[Order]
 
-  def __init__(self, orders: list[Order]) -> None:
-    self.orders = orders
+    def __init__(self, orders: list[Order]) -> None:
+        self.orders = orders
 
-  async def getAll(self) -> list[Order]:
-    return self.orders
+    async def getAll(self) -> list[Order]:
+        return self.orders
 
-  async def getById(self, order_id: UUID) -> Optional[Order]:
-    return next((order for order in self.orders if str(order.id) == str(order_id)), None)
-  
-  async def search(self, **filters: Any) -> list[Order]:
-    order_code = filters.get('order_code')
-    search_predicate = lambda order: order_code in order.code
+    async def getById(self, order_id: UUID) -> Optional[Order]:
+        return next(
+            (order for order in self.orders if str(order.id) == str(order_id)), None
+        )
 
-    return list(filter(search_predicate, self.orders))
+    async def search(self, **filters: Any) -> list[Order]:
+        order_code = filters.get("order_code")
+        search_predicate = lambda order: order_code in order.code
 
-  async def create(self, model: CreateOrderModel) -> None:
-    next_code = str(len(self.orders) + 1).rjust(6, '0')
-    created_at = datetime.now()
+        return list(filter(search_predicate, self.orders))
 
-    order = Order(
-      id=uuid4(),
-      code=next_code,
-      created_at=created_at,
-      updated_at=created_at,
-      status=OrderStatus.NOT_PAID,
-      payment=model.payment,
-      items=[],
-      rounds=list(map(make_round, model.rounds))
-    )
+    async def create(self, model: CreateOrderModel) -> Order:
+        next_code = str(len(self.orders) + 1).rjust(6, "0")
+        created_at = datetime.now()
 
-    self.orders.append(order)
+        order = Order(
+            id=uuid4(),
+            code=next_code,
+            created_at=created_at,
+            updated_at=created_at,
+            status=OrderStatus.NOT_PAID,
+            payment=model.payment,
+            items=[],
+            rounds=list(map(make_round, model.rounds)),
+        )
 
-    return order
+        self.orders.append(order)
 
-  async def update(self, model: UpdateOrderModel) -> None:
-    order_to_update = await self.getById(model.order_id)
+        return order
 
-    if order_to_update is None:
-      raise OrderNotFoundError(model.id)
+    async def update(self, model: UpdateOrderModel) -> Order:
+        order_to_update = await self.getById(model.order_id)
 
-    if model.payment:
-      order_to_update.payment = model.payment
+        if order_to_update is None:
+            raise NotFoundOrderError(model.order_id)
 
-    if model.rounds:
-      order_to_update.rounds = list(map(make_round, model.rounds))
+        if model.payment:
+            order_to_update.payment = model.payment
 
-    if model.items:
-      order_to_update.items = model.items
+        if model.rounds:
+            order_to_update.rounds = list(map(make_round, model.rounds))
 
-    if model.status:
-      order_to_update.status = model.status
+        if model.items:
+            order_to_update.items = model.items
 
-    order_to_update.updated_at = datetime.now()
+        if model.status:
+            order_to_update.status = model.status
 
-    return order_to_update
+        order_to_update.updated_at = datetime.now()
+
+        return order_to_update

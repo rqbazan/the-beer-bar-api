@@ -1,10 +1,19 @@
 PORT ?= 3001
 
 dev:
-	uvicorn main:app \
+	poetry run uvicorn main:app \
 		--port $(PORT) \
 		--app-dir ./src \
 		--reload
 
-test:
-	pytest
+test\:unit:
+	poetry run pytest -v
+
+test\:static:
+	make -j 2 check\:lint check\:format
+
+check\:lint:
+	poetry run pyright src
+
+check\:format:
+	poetry run black src
