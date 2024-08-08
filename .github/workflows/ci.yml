@@ -1,0 +1,34 @@
+name: CI
+
+on: [push]
+
+jobs:
+  testing:
+    name: 👀 Testing
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@master
+
+      - name: 📜 Install poetry
+        run: pipx install poetry
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+          cache: "poetry"
+
+      - name: 📦 Install dependencies
+        run: poetry install
+
+      - name: 🔎 Static testing
+        run: make test:static
+
+      - name: 🧪 Unit test
+        run: make test:unit
