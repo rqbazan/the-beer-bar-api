@@ -16,4 +16,7 @@ check\:lint:
 	poetry run pyright src
 
 check\:format:
+	poetry run black --check src
+
+fix\:format:
 	poetry run black src
