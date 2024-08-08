@@ -1,11 +1,14 @@
 # The Beer Bar API
 
-<p> 
-  <a href="https://github.com/psf/black">
-    <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
-  </a>
+<p>
    <a href="https://www.python.org/downloads/release/python-3124/">
       <img alt="Python 3.12" src="https://img.shields.io/badge/python-3.12-blue.svg">
+   </a>
+   <a href="https://github.com/psf/black">
+    <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+   </a>
+   <a href="https://microsoft.github.io/pyright/">
+      <img alt="checked with pyright" src="https://microsoft.github.io/pyright/img/pyright_badge.svg">
    </a>
 </p>
 
@@ -67,3 +70,6 @@ fly deploy
 | Command            | Description                    |
 | ------------------ | ------------------------------ |
 | `make test:static` | Run linter and formatter check |
+| `make fix:format`  | Run formatter in all files     |
+
+For more commands, please check the [Makefile](./Makefile).
